@@ -243,10 +243,10 @@ joan@ubuntu-docker:~$ sudo vi ~/docker-project/php/Dockerfile
 ```
 
 Contingut del fitxer ```~/docker-project/php/Dockerfile```
-
+```sh
 FROM php:7.0-fpm  
 RUN docker-php-ext-install pdo_mysql 
-
+```
 
 ```bash
 joan@ubuntu-docker:~$ sudo vi ~/docker-project/docker-compose.yml
