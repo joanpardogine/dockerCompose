@@ -30,11 +30,11 @@ joan@ubuntu-docker:~/docker-project$ vi docker-compose.yml
 
 Contingut del fitxer ```docker-compose.yml```
 ```sh
-nginx:
-   image: nginx:latest
-   container_name: nginx-container
-   ports:
-    - 80:80
+ nginx:
+    image: nginx:latest
+    container_name: nginx-container
+    ports:
+     - 80:80
 ```
 
 ```bash
@@ -46,7 +46,7 @@ CONTAINER ID   IMAGE          COMMAND                  CREATED              STAT
 e94f561843c2   nginx:latest   "/docker-entrypoint.…"   About a minute ago   Up 17 seconds   0.0.0.0:80->80/tcp, :::80->80/tcp   nginx-container
 ```
 
-Open your web browser and access the URL http://your-server-ip. You should see the following page:
+Obre el navegador i acedeix a la URL http://ip-del-teu-servidor. Hauries de veure la següent pàgina:
 ![imatge contenidor nginx](./nginx.png)
 
 
@@ -123,31 +123,33 @@ joan@ubuntu-docker:~$ vi ~/docker-project/nginx/Dockerfile
 ```
 
 Contingut del fitxer ```~/docker-project/nginx/Dockerfile```
-FROM nginx:latest   
-COPY ./default.conf /etc/nginx/conf.d/default.conf
+```sh
+ FROM nginx:latest   
+ COPY ./default.conf /etc/nginx/conf.d/default.conf
+```
 
 
 
 Contingut del fitxer ```~/docker-project/docker-compose.yml```
 
 ```sh
-nginx:
-  build: ./nginx/
-  container_name: nginx-container
-  ports:
-    - 80:80
-  links:
-    - php
-  volumes:
-    - ./www/html/:/var/www/html/
+  nginx:
+    build: ./nginx/
+    container_name: nginx-container
+    ports:
+      - 80:80
+    links:
+      - php
+    volumes:
+      - ./www/html/:/var/www/html/
 
-php:
-  image: php:7.0-fpm
-  container_name: php-container
-  expose:
-    - 9000
-  volumes:
-    - ./www/html/:/var/www/html/
+  php:
+    image: php:7.0-fpm
+    container_name: php-container
+    expose:
+      - 9000
+    volumes:
+      - ./www/html/:/var/www/html/
 ```
 
 ```bash
@@ -156,7 +158,7 @@ joan@ubuntu-docker:~$ cd ~/docker-project
 joan@ubuntu-docker:~/docker-project$ sudo docker-compose up -d
 ```
 
-Open your web browser and access the URL http://your-server-ip. You should see the following page:
+Obre el navegador i acedeix a la URL http://ip-del-teu-servidor. Hauries de veure la següent pàgina:
 ![imatge contenidor php](./php.png)
 
 
@@ -177,7 +179,7 @@ Contingut del fitxer ```~/docker-project/www/html/index.php```
 </body>
 ```
 
-Open your web browser and access the URL http://your-server-ip. You should see the following page:
+Obre el navegador i acedeix a la URL http://ip-del-teu-servidor. Hauries de veure la següent pàgina:
 ![imatge contenidor php](./php2.png)
 
 # Crear el contenidor de Dades
@@ -189,30 +191,30 @@ joan@ubuntu-docker:~$ vi ~/docker-project/docker-compose.yml
 Contingut del fitxer ```~/docker-project/nginx/Dockerfile```
 
 ```sh
-nginx:
-  build: ./nginx/
-  container_name: nginx-container  
-  ports:
-    - 80:80
-  links:
-    - php
-  volumes_from:
-    - app-data
-
-php:
-  image: php:7.0-fpm
-  container_name: php-container
-  expose:
-    - 9000
-  volumes_from:
-    - app-data
-
-app-data:
-  image: php:7.0-fpm
-  container_name: app-data-container
-  volumes:
-    - ./www/html/:/var/www/html/
-  command: "true"
+  nginx:
+    build: ./nginx/
+    container_name: nginx-container  
+    ports:
+      - 80:80
+    links:
+      - php
+    volumes_from:
+      - app-data
+  
+  php:
+    image: php:7.0-fpm
+    container_name: php-container
+    expose:
+      - 9000
+    volumes_from:
+      - app-data
+  
+  app-data:
+    image: php:7.0-fpm
+    container_name: app-data-container
+    volumes:
+      - ./www/html/:/var/www/html/
+    command: "true"
 ```
 
 ```bash
@@ -255,50 +257,50 @@ joan@ubuntu-docker:~$ sudo vi ~/docker-project/docker-compose.yml
 Contingut del fitxer ```~/docker-project/docker-compose.yml```
 
 ```sh
-nginx:
-  build: ./nginx/
-  container_name: nginx-container
-  ports:
-  - 80:80
-  links:
-  - php
-  volumes_from:
-  - app-data
-
-php:
-  build: ./php/
-  container_name: php-container
-  expose:
-    - 9000
-  links:
-    - mysql
-  volumes_from:
+  nginx:
+    build: ./nginx/
+    container_name: nginx-container
+    ports:
+    - 80:80
+    links:
+    - php
+    volumes_from:
     - app-data
-
-app-data:
-  image: php:7.0-fpm
-  container_name: app-data-container
-  volumes:
-    - ./www/html/:/var/www/html/
-  command: "true"
-
-mysql:
-  image: mysql:5.7
-  container_name: mysql-container
-  volumes_from:
-    - mysql-data
-  environment:
-    MYSQL_ROOT_PASSWORD: secret
-    MYSQL_DATABASE: mydb
-    MYSQL_USER: myuser
-    MYSQL_PASSWORD: password
-
-mysql-data:
-  image: mysql:5.7
-  container_name: mysql-data-container
-  volumes:
-    - /var/lib/mysql
-  command: "true"
+  
+  php:
+    build: ./php/
+    container_name: php-container
+    expose:
+      - 9000
+    links:
+      - mysql
+    volumes_from:
+      - app-data
+  
+  app-data:
+    image: php:7.0-fpm
+    container_name: app-data-container
+    volumes:
+      - ./www/html/:/var/www/html/
+    command: "true"
+  
+  mysql:
+    image: mysql:5.7
+    container_name: mysql-container
+    volumes_from:
+      - mysql-data
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: password
+  
+  mysql-data:
+    image: mysql:5.7
+    container_name: mysql-data-container
+    volumes:
+      - /var/lib/mysql
+    command: "true"
 ```
 
 ```bash
