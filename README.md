@@ -2,16 +2,16 @@ https://www.atlantic.net/vps-hosting/how-to-deploy-a-php-application-with-nginx-
 
 # Estructrura del directori
 
-~/docker-project/
-  ├── docker-compose.yml
-  ├── nginx
-  │   ├── default.conf
-  │   └── Dockerfile
-  ├── php
-  │   └── Dockerfile
-  └── www
-      └── html
-          └── index.php
+> ~/docker-project/
+>   ├── docker-compose.yml
+>   ├── nginx
+>   │   ├── default.conf
+>   │   └── Dockerfile
+>   ├── php
+>   │   └── Dockerfile
+>   └── www
+>       └── html
+>           └── index.php
 
 
 # Crear el contenidor de Nginx
