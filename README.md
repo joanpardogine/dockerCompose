@@ -29,11 +29,13 @@ joan@ubuntu-docker:~/docker-project$ vi docker-compose.yml
 ```
 
 Contingut del fitxer ```docker-compose.yml```
-> nginx:
->    image: nginx:latest
->    container_name: nginx-container
->    ports:
->     - 80:80
+```sh
+nginx:
+   image: nginx:latest
+   container_name: nginx-container
+   ports:
+    - 80:80
+```
 
 ```bash
 joan@ubuntu-docker:~/docker-project$ sudo docker-compose up -d
@@ -57,15 +59,17 @@ joan@ubuntu-docker:~/docker-project$ vi ~/docker-project/www/html/index.php
 ```
 
 Contingut del fitxer ```~/docker-project/www/html/index.php```
-> <!DOCTYPE html>  
->     <head>  
->     <title>Hello World!</title>
->     </head>  
-> 
->     <body>  
->     <h1>Hello World!</h1>
->     <p><?php echo 'We are running PHP, version: ' . phpversion(); ?></p>
->     </body>
+```html
+<!DOCTYPE html>  
+    <head>  
+    <title>Hello World!</title>
+    </head>  
+
+    <body>  
+    <h1>Hello World!</h1>
+    <p><?php echo 'We are running PHP, version: ' . phpversion(); ?></p>
+    </body>
+```
 
 ```bash
 joan@ubuntu-docker:~ mkdir ~/docker-project/nginx
@@ -74,74 +78,77 @@ joan@ubuntu-docker:~$ vi ~/docker-project/nginx/default.conf
 ```
 
 Contingut del fitxer ```~/docker-project/nginx/default.conf```
->     server {  
-> 
->         listen 80 default_server;  
->         root /var/www/html;  
->         index index.html index.php;  
->    
->         charset utf-8;  
->    
->         location / {  
->          try_files $uri $uri/ /index.php?$query_string;  
->         }  
->    
->         location = /favicon.ico { access_log off; log_not_found off; }  
->         location = /robots.txt { access_log off; log_not_found off; }  
->    
->         access_log off;  
->         error_log /var/log/nginx/error.log error;  
->    
->         sendfile off;  
->    
->         client_max_body_size 100m;  
->    
->         location ~ .php$ {  
->          fastcgi_split_path_info ^(.+.php)(/.+)$;  
->          fastcgi_pass php:9000;  
->          fastcgi_index index.php;  
->          include fastcgi_params;  
->          fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;  
->          fastcgi_intercept_errors off;  
->          fastcgi_buffer_size 16k;  
->          fastcgi_buffers 4 16k;  
->        }  
->    
->         location ~ /.ht {  
->          deny all;  
->         }  
->        } 
+```bash
+    server {  
+
+        listen 80 default_server;  
+        root /var/www/html;  
+        index index.html index.php;  
+   
+        charset utf-8;  
+   
+        location / {  
+         try_files $uri $uri/ /index.php?$query_string;  
+        }  
+   
+        location = /favicon.ico { access_log off; log_not_found off; }  
+        location = /robots.txt { access_log off; log_not_found off; }  
+   
+        access_log off;  
+        error_log /var/log/nginx/error.log error;  
+   
+        sendfile off;  
+   
+        client_max_body_size 100m;  
+   
+        location ~ .php$ {  
+         fastcgi_split_path_info ^(.+.php)(/.+)$;  
+         fastcgi_pass php:9000;  
+         fastcgi_index index.php;  
+         include fastcgi_params;  
+         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;  
+         fastcgi_intercept_errors off;  
+         fastcgi_buffer_size 16k;  
+         fastcgi_buffers 4 16k;  
+       }  
+   
+        location ~ /.ht {  
+         deny all;  
+        }  
+       } 
+```
 
 ```bash
 joan@ubuntu-docker:~$ vi ~/docker-project/nginx/Dockerfile
 ```
 
 Contingut del fitxer ```~/docker-project/nginx/Dockerfile```
-> FROM nginx:latest   
-> COPY ./default.conf /etc/nginx/conf.d/default.conf
+FROM nginx:latest   
+COPY ./default.conf /etc/nginx/conf.d/default.conf
 
 
 
 Contingut del fitxer ```~/docker-project/docker-compose.yml```
 
-> nginx:
->   build: ./nginx/
->   container_name: nginx-container
->   ports:
->     - 80:80
->   links:
->     - php
->   volumes:
->     - ./www/html/:/var/www/html/
-> 
-> php:
->   image: php:7.0-fpm
->   container_name: php-container
->   expose:
->     - 9000
->   volumes:
->     - ./www/html/:/var/www/html/
+```sh
+nginx:
+  build: ./nginx/
+  container_name: nginx-container
+  ports:
+    - 80:80
+  links:
+    - php
+  volumes:
+    - ./www/html/:/var/www/html/
 
+php:
+  image: php:7.0-fpm
+  container_name: php-container
+  expose:
+    - 9000
+  volumes:
+    - ./www/html/:/var/www/html/
+```
 
 ```bash
 joan@ubuntu-docker:~$ cd ~/docker-project
@@ -158,21 +165,20 @@ joan@ubuntu-docker:~$ vi ~/docker-project/www/html/index.php
 ```
 
 Contingut del fitxer ```~/docker-project/www/html/index.php```
+```html
+<!DOCTYPE html>  
+<head>  
+<title>Hello World!</title>
+</head>  
 
-> <!DOCTYPE html>  
-> <head>  
-> <title>Hello World!</title>
-> </head>  
-> 
-> <body>  
-> <h1>Hello World! Changes are Applied</h1>
-> <p><?php echo 'We are running PHP, version: ' . phpversion(); ?></p>
-> </body>
+<body>  
+<h1>Hello World! Changes are Applied</h1>
+<p><?php echo 'We are running PHP, version: ' . phpversion(); ?></p>
+</body>
+```
 
 Open your web browser and access the URL http://your-server-ip. You should see the following page:
 ![imatge contenidor php](./php2.png)
-
-
 
 # Crear el contenidor de Dades
 
@@ -182,6 +188,7 @@ joan@ubuntu-docker:~$ vi ~/docker-project/docker-compose.yml
 
 Contingut del fitxer ```~/docker-project/nginx/Dockerfile```
 
+```sh
 nginx:
   build: ./nginx/
   container_name: nginx-container  
@@ -206,7 +213,7 @@ app-data:
   volumes:
     - ./www/html/:/var/www/html/
   command: "true"
-
+```
 
 ```bash
 joan@ubuntu-docker:~$ cd ~/docker-project
@@ -247,6 +254,7 @@ joan@ubuntu-docker:~$ sudo vi ~/docker-project/docker-compose.yml
 
 Contingut del fitxer ```~/docker-project/docker-compose.yml```
 
+```sh
 nginx:
   build: ./nginx/
   container_name: nginx-container
@@ -291,11 +299,13 @@ mysql-data:
   volumes:
     - /var/lib/mysql
   command: "true"
+```
 
 ```bash
 joan@ubuntu-docker:~$ sudo vi ~/docker-project/www/html/index.php
 ```
-  
+
+```html
 <!DOCTYPE html>
 
 <head>
@@ -331,7 +341,7 @@ joan@ubuntu-docker:~$ sudo vi ~/docker-project/www/html/index.php
 </body>
 
 </html>
-
+```
 
 
 ```bash
