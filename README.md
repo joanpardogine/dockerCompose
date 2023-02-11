@@ -1,9 +1,13 @@
 https://www.atlantic.net/vps-hosting/how-to-deploy-a-php-application-with-nginx-and-mysql-using-docker-and-docker-compose/
 
+
+~/<CognomAlumne>-docker-compose => <CognomAlumne>
+
+
 # Estructrura del directori
 
 ```sh
-~/docker-project/
+~/<CognomAlumne>-docker-compose/
   ├── docker-compose.yml
   ├── nginx
   │   ├── default.conf
@@ -18,14 +22,14 @@ https://www.atlantic.net/vps-hosting/how-to-deploy-a-php-application-with-nginx-
 # Crear el contenidor de Nginx
 
 ```bash
-joan@ubuntu-docker:~ mkdir ~/docker-project
+user@server:~ sudo mkdir ~/<CognomAlumne>-docker-compose
 
-joan@ubuntu-docker:~ cd ~/docker-project
+user@server:~ cd ~/<CognomAlumne>-docker-compose
 ```
 
 
 ```bash
-joan@ubuntu-docker:~/docker-project$ vi docker-compose.yml
+user@server:~/<CognomAlumne>-docker-compose$ sudo vi docker-compose.yml
 ```
 
 Contingut del fitxer ```docker-compose.yml```
@@ -38,10 +42,10 @@ Contingut del fitxer ```docker-compose.yml```
 ```
 
 ```bash
-joan@ubuntu-docker:~/docker-project$ sudo docker-compose up -d
+user@server:~/<CognomAlumne>-docker-compose$ sudo docker-compose up -d
 Creating nginx-container ... done
 
-joan@ubuntu-docker:~/docker-project$ sudo docker ps 
+user@server:~/<CognomAlumne>-docker-compose$ sudo docker ps 
 CONTAINER ID   IMAGE          COMMAND                  CREATED              STATUS          PORTS                               NAMES
 e94f561843c2   nginx:latest   "/docker-entrypoint.…"   About a minute ago   Up 17 seconds   0.0.0.0:80->80/tcp, :::80->80/tcp   nginx-container
 ```
@@ -53,12 +57,12 @@ Obre el navegador i acedeix a la URL http://ip-del-teu-servidor. Hauries de veur
 # Crear el contenidor de PHP
 
 ```bash
-joan@ubuntu-docker:~ mkdir -p ~/docker-project/www/html
+user@server:~ sudo mkdir -p ~/<CognomAlumne>-docker-compose/www/html
 
-joan@ubuntu-docker:~/docker-project$ vi ~/docker-project/www/html/index.php
+user@server:~/<CognomAlumne>-docker-compose$ sudo vi ~/<CognomAlumne>-docker-compose/www/html/index.php
 ```
 
-Contingut del fitxer ```~/docker-project/www/html/index.php```
+Contingut del fitxer ```~/<CognomAlumne>-docker-compose/www/html/index.php```
 ```html
 <!DOCTYPE html>  
     <head>  
@@ -72,12 +76,12 @@ Contingut del fitxer ```~/docker-project/www/html/index.php```
 ```
 
 ```bash
-joan@ubuntu-docker:~ mkdir ~/docker-project/nginx
+user@server:~ sudo mkdir ~/<CognomAlumne>-docker-compose/nginx
 
-joan@ubuntu-docker:~$ vi ~/docker-project/nginx/default.conf
+user@server:~$ sudo vi ~/<CognomAlumne>-docker-compose/nginx/default.conf
 ```
 
-Contingut del fitxer ```~/docker-project/nginx/default.conf```
+Contingut del fitxer ```~/<CognomAlumne>-docker-compose/nginx/default.conf```
 ```bash
     server {  
 
@@ -119,10 +123,10 @@ Contingut del fitxer ```~/docker-project/nginx/default.conf```
 ```
 
 ```bash
-joan@ubuntu-docker:~$ vi ~/docker-project/nginx/Dockerfile
+user@server:~$ sudo vi ~/<CognomAlumne>-docker-compose/nginx/Dockerfile
 ```
 
-Contingut del fitxer ```~/docker-project/nginx/Dockerfile```
+Contingut del fitxer ```~/<CognomAlumne>-docker-compose/nginx/Dockerfile```
 ```sh
  FROM nginx:latest   
  COPY ./default.conf /etc/nginx/conf.d/default.conf
@@ -130,7 +134,7 @@ Contingut del fitxer ```~/docker-project/nginx/Dockerfile```
 
 
 
-Contingut del fitxer ```~/docker-project/docker-compose.yml```
+Contingut del fitxer ```~/<CognomAlumne>-docker-compose/docker-compose.yml```
 
 ```sh
   nginx:
@@ -153,9 +157,9 @@ Contingut del fitxer ```~/docker-project/docker-compose.yml```
 ```
 
 ```bash
-joan@ubuntu-docker:~$ cd ~/docker-project
+user@server:~$ cd ~/<CognomAlumne>-docker-compose
 
-joan@ubuntu-docker:~/docker-project$ sudo docker-compose up -d
+user@server:~/<CognomAlumne>-docker-compose$ sudo docker-compose up -d
 ```
 
 Obre el navegador i acedeix a la URL http://ip-del-teu-servidor. Hauries de veure la següent pàgina:
@@ -163,10 +167,10 @@ Obre el navegador i acedeix a la URL http://ip-del-teu-servidor. Hauries de veur
 
 
 ```bash
-joan@ubuntu-docker:~$ vi ~/docker-project/www/html/index.php
+user@server:~$ sudo vi ~/<CognomAlumne>-docker-compose/www/html/index.php
 ```
 
-Contingut del fitxer ```~/docker-project/www/html/index.php```
+Contingut del fitxer ```~/<CognomAlumne>-docker-compose/www/html/index.php```
 ```html
 <!DOCTYPE html>  
 <head>  
@@ -185,10 +189,10 @@ Obre el navegador i acedeix a la URL http://ip-del-teu-servidor. Hauries de veur
 # Crear el contenidor de Dades
 
 ```bash
-joan@ubuntu-docker:~$ vi ~/docker-project/docker-compose.yml
+user@server:~$ sudo vi ~/<CognomAlumne>-docker-compose/docker-compose.yml
 ```
 
-Contingut del fitxer ```~/docker-project/nginx/Dockerfile```
+Contingut del fitxer ```~/<CognomAlumne>-docker-compose/nginx/docker-compose.yml```
 
 ```sh
   nginx:
@@ -218,16 +222,16 @@ Contingut del fitxer ```~/docker-project/nginx/Dockerfile```
 ```
 
 ```bash
-joan@ubuntu-docker:~$ cd ~/docker-project
+user@server:~$ cd ~/<CognomAlumne>-docker-compose
 
-joan@ubuntu-docker:~/docker-project$ sudo docker-compose up -d
+user@server:~/<CognomAlumne>-docker-compose$ sudo docker-compose up -d
 Creating app-data-container ... done
 Recreating php-container    ... done
 Recreating nginx-container  ... done
 ```
 
 ```bash
-joan@ubuntu-docker:~/docker-project$ sudo docker ps -a
+user@server:~/<CognomAlumne>-docker-compose$ sudo docker ps -a
 CONTAINER ID   IMAGE                  COMMAND                  CREATED         STATUS                      PORTS                               NAMES
 fb5a3105591a   docker-project_nginx   "/docker-entrypoint.…"   3 minutes ago   Up 3 minutes                0.0.0.0:80->80/tcp, :::80->80/tcp   nginx-container
 9cdc9120219d   php:7.0-fpm            "docker-php-entrypoi…"   3 minutes ago   Up 3 minutes                9000/tcp                            php-container
@@ -239,22 +243,22 @@ fb5a3105591a   docker-project_nginx   "/docker-entrypoint.…"   3 minutes ago  
 # Crear el contenidor de MySQL 
 
 ```bash
-joan@ubuntu-docker:~$ mkdir ~/docker-project/php
+user@server:~$ mkdir ~/<CognomAlumne>-docker-compose/php
 
-joan@ubuntu-docker:~$ sudo vi ~/docker-project/php/Dockerfile
+user@server:~$ sudo vi ~/<CognomAlumne>-docker-compose/php/Dockerfile
 ```
 
-Contingut del fitxer ```~/docker-project/php/Dockerfile```
+Contingut del fitxer ```~/<CognomAlumne>-docker-compose/php/Dockerfile```
 ```sh
 FROM php:7.0-fpm  
 RUN docker-php-ext-install pdo_mysql 
 ```
 
 ```bash
-joan@ubuntu-docker:~$ sudo vi ~/docker-project/docker-compose.yml
+user@server:~$ sudo vi ~/<CognomAlumne>-docker-compose/docker-compose.yml
 ```
 
-Contingut del fitxer ```~/docker-project/docker-compose.yml```
+Contingut del fitxer ```~/<CognomAlumne>-docker-compose/docker-compose.yml```
 
 ```sh
   nginx:
@@ -304,7 +308,7 @@ Contingut del fitxer ```~/docker-project/docker-compose.yml```
 ```
 
 ```bash
-joan@ubuntu-docker:~$ sudo vi ~/docker-project/www/html/index.php
+user@server:~$ sudo vi ~/<CognomAlumne>-docker-compose/www/html/index.php
 ```
 
 ```html
@@ -347,20 +351,20 @@ joan@ubuntu-docker:~$ sudo vi ~/docker-project/www/html/index.php
 
 
 ```bash
-joan@ubuntu-docker:~ cd ~/docker-project
+user@server:~ cd ~/<CognomAlumne>-docker-compose
 
-joan@ubuntu-docker:~/docker-project$ sudo docker-compose up -d
+user@server:~/<CognomAlumne>-docker-compose$ sudo docker-compose up -d
 Creating mysql-data-container ... done
 Creating app-data-container   ... done
 Creating mysql-container      ... done
 Creating php-container        ... done
 Creating nginx-container      ... done
 
-joan@ubuntu-docker:~/docker-project$ 
+user@server:~/<CognomAlumne>-docker-compose$ 
 ```
 
 
 ```bash
-joan@ubuntu-docker:~/docker-project$ sudo docker ps -a
+user@server:~/<CognomAlumne>-docker-compose$ sudo docker ps -a
 
 ```
